@@ -59,18 +59,22 @@ def load_saved_artifacts():
     print("loading saved artifacts...start")
     global __class_name_to_number
     global __class_number_to_name
-
-    # Dynamically get the path to the model folder
-    model_path = os.path.join(os.path.dirname(__file__), '..', 'model')
-
-    with open(os.path.join(model_path, "class_dictionary.json"), "r") as f:
-        __class_name_to_number = json.load(f)
-        __class_number_to_name = {v: k for k, v in __class_name_to_number.items()}
-
     global __model
-    if __model is None:
+
+    model_path = os.path.join(os.path.dirname(__file__), '..', 'model')
+    print("✅ Model directory path:", model_path)
+
+    try:
+        with open(os.path.join(model_path, "class_dictionary.json"), "r") as f:
+            __class_name_to_number = json.load(f)
+            __class_number_to_name = {v: k for k, v in __class_name_to_number.items()}
+
         with open(os.path.join(model_path, "save_model.pkl"), 'rb') as f:
             __model = joblib.load(f)
+            print("✅ Model loaded successfully")
+
+    except Exception as e:
+        print("❌ Failed to load model:", str(e))
 
     print("loading saved artifacts...done")
 
