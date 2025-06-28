@@ -2,12 +2,13 @@ Dropzone.autoDiscover = false;
 
 function init() {
     let dz = new Dropzone("#dropzone", {
-        url: "http://127.0.0.1:5000/classify_image",
-        maxFiles: 1,
-        addRemoveLinks: true,
-        dictDefaultMessage: "Drop an image or click to upload",
-        autoProcessQueue: false
-    });
+    url: "https://famous-face-classifier.onrender.com/classify_image",
+    maxFiles: 1,
+    addRemoveLinks: true,
+    dictDefaultMessage: "Drop an image or click to upload",
+    autoProcessQueue: false
+});
+
 
     dz.on("addedfile", function () {
         if (dz.files[1] != null) {
