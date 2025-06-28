@@ -7,6 +7,9 @@ import base64
 app = Flask(__name__, static_folder="../UI", static_url_path="/")
 CORS(app)
 
+# ✅ Load model when the server starts (always, even in Gunicorn)
+util.load_saved_artifacts()
+
 @app.route('/')
 def serve_index():
     return send_from_directory(app.static_folder, 'app.html')
@@ -37,11 +40,3 @@ def classify_image():
     except Exception as e:
         print("❌ Error during classification:", str(e))
         return jsonify({'error': str(e)}), 500
-
-if __name__ == "__main__":
-    import os
-    port = int(os.environ.get("PORT", 5000))  # Use PORT from Render's environment
-    print(f"Starting server on port {port}")
-    util.load_saved_artifacts()
-    app.run(host='0.0.0.0', port=port)  # Required for Render
-
