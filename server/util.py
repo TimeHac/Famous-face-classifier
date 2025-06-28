@@ -56,27 +56,33 @@ def class_number_to_name(class_num):
     return __class_number_to_name[class_num]
 
 def load_saved_artifacts():
-    print("loading saved artifacts...start")
+    print("📦 Loading saved artifacts...")
     global __class_name_to_number
     global __class_number_to_name
     global __model
 
     model_path = os.path.join(os.path.dirname(__file__), '..', 'model')
-    print("✅ Model directory path:", model_path)
+    print("📁 Model path resolved to:", model_path)
 
     try:
-        with open(os.path.join(model_path, "class_dictionary.json"), "r") as f:
+        class_dict_path = os.path.join(model_path, "class_dictionary.json")
+        model_file_path = os.path.join(model_path, "save_model.pkl")
+
+        print("🔍 Checking file:", class_dict_path, os.path.exists(class_dict_path))
+        print("🔍 Checking file:", model_file_path, os.path.exists(model_file_path))
+
+        with open(class_dict_path, "r") as f:
             __class_name_to_number = json.load(f)
             __class_number_to_name = {v: k for k, v in __class_name_to_number.items()}
 
-        with open(os.path.join(model_path, "save_model.pkl"), 'rb') as f:
+        with open(model_file_path, 'rb') as f:
             __model = joblib.load(f)
-            print("✅ Model loaded successfully")
+
+        print("✅ Model loaded successfully")
 
     except Exception as e:
-        print("❌ Failed to load model:", str(e))
+        print("❌ Exception while loading artifacts:", str(e))
 
-    print("loading saved artifacts...done")
 
 def get_cv2_image_from_base64_string(b64str):
     encoded_data = b64str.split(',')[1]
