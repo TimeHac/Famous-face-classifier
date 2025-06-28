@@ -62,6 +62,8 @@ The model is trained to recognize and classify the following personalities:
 - Upgrade to **deep learning (CNN)**-based face recognition
 - Deploy online using platforms like:
   - [Render](https://render.com/)
+- My project
+  -[Online](https://famous-face-classifier.onrender.com/)
 
 ---
 
