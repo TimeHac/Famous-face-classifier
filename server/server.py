@@ -39,6 +39,9 @@ def classify_image():
         return jsonify({'error': str(e)}), 500
 
 if __name__ == "__main__":
-    print("Starting Python Flask Server For Sports Celebrity Image Classification")
+    import os
+    port = int(os.environ.get("PORT", 5000))  # Use PORT from Render's environment
+    print(f"Starting server on port {port}")
     util.load_saved_artifacts()
-    app.run(debug=True, port=5000)
+    app.run(host='0.0.0.0', port=port)  # Required for Render
+
